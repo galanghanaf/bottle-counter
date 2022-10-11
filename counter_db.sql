@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2022 at 05:41 AM
+-- Generation Time: Oct 10, 2022 at 08:24 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -35,54 +35,68 @@ CREATE TABLE `data_botol` (
   `botolkosongdarivisualkosong` varchar(255) DEFAULT NULL,
   `botolyangmasuktreatment` varchar(255) DEFAULT NULL,
   `botolyangbisaditreatment` varchar(255) DEFAULT NULL,
-  `botolyangtidakbisaditreatment` varchar(255) DEFAULT NULL,
-  `createdAt` date NOT NULL
+  `date_created` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `data_botol`
 --
 
-INSERT INTO `data_botol` (`id`, `name`, `shift`, `botolkotordarichecker`, `botolkosongdarivisualkosong`, `botolyangmasuktreatment`, `botolyangbisaditreatment`, `botolyangtidakbisaditreatment`, `createdAt`) VALUES
-(23, 'Dhika Lama', 'Shift 2', '12', '11', '0', '0', '0', '2022-09-29'),
-(24, 'Bina Marga', 'Shift 3', '0', '0', '0', '0', '0', '2022-09-29'),
-(25, 'Bodi Santosa', 'Shift 1', '0', '0', '0', '0', '0', '2022-09-29'),
-(26, 'Sandi Rama', 'Shift 2', '15', '50', '42', '21', '11', '2022-09-30'),
-(27, 'Sandi Rama', 'Shift 3', '2', '31', '42', '14', '14', '2022-09-29'),
-(28, 'Sandi Rama', 'Shift 3', '1', '1', '1', '1', '1', '2022-10-03'),
-(29, 'Dhika Lama', 'Shift 1', '1', '1', '1', '1', '1', '2022-10-03'),
-(31, 'Daffa Baru', 'Shift 1', '3', '4', '3', '3', '3', '2022-10-03'),
-(32, 'Sandi Rama', 'Shift 2', '4', '3', '3', '7', '6', '2022-10-04'),
-(33, 'Sandi Rama', 'Shift 1', '6', '4', '3', '4', '5', '2022-10-04'),
-(34, 'Bina Marga', 'Shift 2', '3', '3', '4', '4', '4', '2022-10-05');
+INSERT INTO `data_botol` (`id`, `name`, `shift`, `botolkotordarichecker`, `botolkosongdarivisualkosong`, `botolyangmasuktreatment`, `botolyangbisaditreatment`, `date_created`) VALUES
+(41, ' Bina Marga', 'Shift 1', '1', '1', '1', '1', '2022-10-09'),
+(42, ' admin', 'Shift 3', '8', '2', '3', '3', '2022-10-10'),
+(45, 'galanghanafi', 'Shift 1', '0', '0', '0', '0', '2022-10-10'),
+(46, ' Bodi Santosa', 'Shift 2', '1', '0', '0', '0', '2022-10-10'),
+(49, ' Andi Setiawan', 'Shift 3', '24', '76', '15', '36', '2022-10-10'),
+(50, ' Siti Marna', 'Shift 1', '12', '62', '84', '732', '2022-10-11');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `data_nama`
+-- Table structure for table `data_supervisor`
 --
 
-CREATE TABLE `data_nama` (
+CREATE TABLE `data_supervisor` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL
+  `name` varchar(255) DEFAULT NULL,
+  `date_created` int(11) DEFAULT NULL,
+  `date_changed` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `data_nama`
+-- Dumping data for table `data_supervisor`
 --
 
-INSERT INTO `data_nama` (`id`, `name`) VALUES
-(6, 'Bodi Santosa'),
-(7, 'Sandi Rama'),
-(8, 'Bina Marga'),
-(9, 'Daffa Baru'),
-(10, 'Galang Hanafi'),
-(11, 'Dodi Saputra'),
-(13, 'Dhika Lama'),
-(14, 'Arya Bima'),
-(15, 'Siti Gina'),
-(16, 'Dina Mari'),
-(17, 'test');
+INSERT INTO `data_supervisor` (`id`, `name`, `date_created`, `date_changed`) VALUES
+(1, 'Andi Setiawan', 1665419303, 1665423700),
+(2, 'Ridwan Aji', 1665419347, 1665419347),
+(3, 'Siti Marna', 1665419357, 1665423674);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `is_active` int(1) NOT NULL,
+  `date_created` int(11) NOT NULL,
+  `date_changed` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `image`, `email`, `password`, `role_id`, `is_active`, `date_created`, `date_changed`) VALUES
+(35, 'admin', 'default.jpg', 'admin@mail.com', '1234', 1, 1, 1665402921, 1665402921),
+(36, 'user', 'default.jpg', 'user@mail.com', '1234', 2, 1, 1665402949, 1665402949);
 
 --
 -- Indexes for dumped tables
@@ -95,9 +109,15 @@ ALTER TABLE `data_botol`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `data_nama`
+-- Indexes for table `data_supervisor`
 --
-ALTER TABLE `data_nama`
+ALTER TABLE `data_supervisor`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -108,13 +128,19 @@ ALTER TABLE `data_nama`
 -- AUTO_INCREMENT for table `data_botol`
 --
 ALTER TABLE `data_botol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
--- AUTO_INCREMENT for table `data_nama`
+-- AUTO_INCREMENT for table `data_supervisor`
 --
-ALTER TABLE `data_nama`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+ALTER TABLE `data_supervisor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+    <link rel="icon" href="<?php echo base_url() ?>/assets/img/logo.png" type="image/gif">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,11 +13,12 @@
 
     <!-- Custom fonts for this template-->
     <link href="<?php echo base_url() ?>/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="<?php echo base_url() ?>/assets/css/nunito-font.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url() ?>/assets/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>/assets/css/horizontal-scroll.css" rel="stylesheet">
+
     <!-- DataTables -->
     <link href="<?php echo base_url() ?>/assets/datatables/jquery.dataTables.min.css" rel="stylesheet">
 
@@ -55,85 +56,61 @@
     <!-- Page Wrapper -->
     <div id="">
 
+        <!-- Content Wrapper -->
         <div id="wrapper content-wrapper" class="">
 
             <!-- Main Content -->
             <div id="content">
-
                 <div class="container-fluid">
-
 
                     <div class="card">
                         <center>
                             <br>
-                            <a href="<?php echo base_url('welcome') ?>" style="float:left" class="previous btn button3 btn-primary"><i class="fas fa-arrow-left"></i></a>
-                            <div class="d-inline">
-
-                                <a href="<?php echo base_url('welcome/addDataNama') ?>" class="btn btn-primary font-weight-bold mb-3 btn-md">Refresh Data Nama</a>
-                                <a href="#" style="float:right" class="previous btn button3 btn-primary"><i class="fas fa-arrow-right"></i></a>
-
-                            </div>
+                            <a href="<?php echo base_url('admin/inputuser') ?>" style="float:left" class="previous btn button3 btn-primary"><i class="fas fa-arrow-left"></i></a>
+                            <a href="#" style="float:right" class="previous btn button3 btn-primary"><i class="fas fa-arrow-right"></i></a>
 
                             <br>
                             <br>
                             <h1 class="h1 mb-0 text-gray-800 font-weight-bold"><?php echo $title ?></h1>
 
-                            <div class="card-body w-50">
 
-                                <?php echo form_open_multipart('welcome/AddDataNamaAction') ?>
-                                <form method="post" action="<?php echo base_url('welcome/addDataNamaAction') ?>" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <input autofocus type="text" name="name" class="form-control form-control-lg" placeholder="Silahkan Masukan Nama Anda...">
-                                        <?php echo form_error('name', '<div class="text small text-danger"></div>') ?>
-                                    </div>
-                                    <button onclick="return confirm('Konfirmasi Untuk Menyimpan Data Nama')" type="submit" class="btn btn-success font-weight-bold btn-lg">SIMPAN</button>
-                                    <?php echo form_close(); ?>
-
-                            </div>
                         </center>
                         <br>
+                        <br>
                     </div>
+
+                    <?php echo $this->session->flashdata('message') ?>
+
+
+
                     <center>
-                        <?php echo $this->session->flashdata('pesan') ?>
-
-
-                        <a class="mb-2 btn btn-primary float-left font-weight-bold" href="<?php echo base_url('welcome/exportdatanama') ?>">
-                            <i class="fas fa-download "></i> Export Data Nama
-                        </a>
-
-                        <center>
-                            <table class=" table-hover table table-bordered w-100 float-left" id="dataTablesNama">
-                                <thead>
+                        <table class=" table-hover table table-bordered w-100 float-left" id="dataTablesNamaDownload">
+                            <thead>
+                                <tr>
+                                    <th class="align-middle text-center bg-primary text-white">No</th>
+                                    <th class="align-middle no-sort text-center bg-primary text-white">Nama</th>
+                                    <th class="align-middle no-sort text-center bg-primary text-white">Email</th>
+                                    <th class="align-middle no-sort text-center bg-primary text-white">Dibuat</th>
+                                    <th class="align-middle no-sort text-center bg-primary text-white">Diubah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $no = 1;
+                                foreach ($data_user as $row) : ?>
                                     <tr>
-                                        <th class="align-middle text-center bg-primary text-white">No</th>
-                                        <th class="align-middle no-sort text-center bg-primary text-white">Nama</th>
-                                        <th class="align-middle no-sort text-center bg-danger text-white">Delete</th>
+                                        <td class="text-center"><?php echo $no++; ?></td>
+                                        <td class="text-center"><?php echo $row->name ?></td>
+                                        <td class="text-center"><?php echo $row->email ?></td>
+                                        <td class="text-center"><?php echo date("d/m/Y", $row->date_created); ?></td>
+                                        <td class="text-center"><?php echo date("d/m/Y", $row->date_changed); ?></td>
 
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $no = 1;
-                                    foreach ($data_nama as $row) : ?>
-                                        <tr>
-                                            <td class="text-center"><?php echo $no++; ?></td>
-                                            <td class="text-center"><?php echo $row->name ?></td>
-                                            <td>
-                                                <center>
-                                                    <a onclick="return confirm('Konfirmasi Penghapusan Data')" class="btn btn-sm btn-danger" href="<?php echo base_url('welcome/deleteDataNama/' . $row->id) ?>">
-                                                        <i class="fas fa-trash"></i></a>
-                                                </center>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-
-                        </center>
-
-
-
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
 
                     </center>
+
 
                 </div>
 
@@ -145,14 +122,13 @@
 
         </div>
 
-
     </div>
 
+
+    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-
 
     <!-- DataTables JavaScript-->
     <script src="<?php echo base_url() ?>/assets/datatables/jquery.min.js"></script>
@@ -164,7 +140,6 @@
     <script src="<?php echo base_url() ?>/assets/datatables/vfs_fonts.js"></script>
     <script src="<?php echo base_url() ?>/assets/datatables/buttons.html5.min.js"></script>
     <script src="<?php echo base_url() ?>/assets/datatables/buttons.print.min.js"></script>
-
 
     <script src="<?php echo base_url() ?>/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -180,8 +155,6 @@
     <!-- Page level custom scripts -->
     <script src="<?php echo base_url() ?>/assets/js/demo/chart-area-demo.js"></script>
     <script src="<?php echo base_url() ?>/assets/js/demo/chart-pie-demo.js"></script>
-
-
 
 </body>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+    <link rel="icon" href="<?php echo base_url() ?>/assets/img/logo.png" type="image/gif">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,7 +13,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="<?php echo base_url() ?>/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="<?php echo base_url() ?>/assets/css/nunito-font.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url() ?>/assets/css/sb-admin-2.min.css" rel="stylesheet">
@@ -23,27 +23,6 @@
     <link href="<?php echo base_url() ?>/assets/datatables/jquery.dataTables.min.css" rel="stylesheet">
 
     <style>
-        html {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            margin: 0;
-            flex: 0 1 auto;
-            align-self: auto;
-            /*recommend 1920 / 1080 max based on usage stats, use 100% to that point*/
-            width: 100%;
-            max-width: 900px;
-
-        }
-
         .buttons-excel {
             margin-bottom: 40px;
 
@@ -66,7 +45,7 @@
                     <div class="card">
                         <center>
                             <br>
-                            <a href="<?php echo base_url('welcome/addDataNama') ?>" style="float:left" class="previous btn button3 btn-primary"><i class="fas fa-arrow-left"></i></a>
+                            <a href="<?php echo base_url('user') ?>" style="float:left" class="previous btn button3 btn-primary"><i class="fas fa-arrow-left"></i></a>
                             <a href="#" style="float:right" class="previous btn button3 btn-primary"><i class="fas fa-arrow-right"></i></a>
 
                             <br>
@@ -79,25 +58,38 @@
                         <br>
                     </div>
 
-                    <?php echo $this->session->flashdata('pesan') ?>
-
-
+                    <?php echo $this->session->flashdata('message') ?>
 
                     <center>
-                        <table class=" table-hover table table-bordered w-100 float-left" id="dataTablesNamaDownload">
+                        <table class=" table-hover table table-bordered w-100 float-left" id="dataTablesBotolDownload">
                             <thead>
                                 <tr>
-                                    <th class="text-center bg-primary text-white">No</th>
-                                    <th class="no-sort text-center bg-primary text-white">Nama</th>
+                                    <th class="align-middle text-center bg-primary text-white">No</th>
+                                    <th class="no-sort align-middle text-center bg-primary text-white">Tanggal</th>
+                                    <th class="no-sort align-middle text-center bg-primary text-white">Nama</th>
+                                    <th class="no-sort align-middle text-center bg-primary text-white">Shift</th>
+                                    <th class="align-middle text-center bg-primary text-white">Botol Kosong Dari ATM</th>
+                                    <th class="align-middle text-center bg-primary text-white">Botol Yang Bisa di Treatment Dari ATM</th>
+                                    <th class="align-middle text-center bg-primary text-white">Botol Kosong Dari Visual Kosong</th>
+                                    <th class="align-middle text-center bg-primary text-white">Botol Yang Bisa Di Treatment Dari Visual</th>
+                                    <th class="align-middle text-center bg-primary text-white">Botol Yang Tidak Bisa Di Treatment (AFKIR)</th>
+                                    <th class="align-middle text-center bg-primary text-white">Total Botol Yang Bisa di Treatment</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1;
-                                foreach ($data_nama as $row) : ?>
+                                foreach ($data_botol as $row) : ?>
                                     <tr>
                                         <td class="text-center"><?php echo $no++; ?></td>
+                                        <td class="text-center"><?php echo date('d/m/Y', strtotime($row->date_created)); ?></td>
                                         <td class="text-center"><?php echo $row->name ?></td>
-
+                                        <td class="text-center"><?php echo $row->shift ?></td>
+                                        <td class="text-center"><?php echo $row->botolkotordarichecker ?></td>
+                                        <td class="text-center"><?php echo $row->botolyangmasuktreatment ?></td>
+                                        <td class="text-center"><?php echo $row->botolkosongdarivisualkosong ?></td>
+                                        <td class="text-center"><?php echo $row->botolyangbisaditreatment ?></td>
+                                        <td class="text-center"><?php echo $row->botolkotordarichecker + $row->botolkosongdarivisualkosong - $row->botolyangmasuktreatment - $row->botolyangbisaditreatment ?></td>
+                                        <td class="text-center"><?php echo $row->botolyangmasuktreatment + $row->botolyangbisaditreatment ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -118,11 +110,12 @@
 
     </div>
 
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+
 
     <!-- DataTables JavaScript-->
     <script src="<?php echo base_url() ?>/assets/datatables/jquery.min.js"></script>
@@ -134,6 +127,7 @@
     <script src="<?php echo base_url() ?>/assets/datatables/vfs_fonts.js"></script>
     <script src="<?php echo base_url() ?>/assets/datatables/buttons.html5.min.js"></script>
     <script src="<?php echo base_url() ?>/assets/datatables/buttons.print.min.js"></script>
+
 
     <script src="<?php echo base_url() ?>/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

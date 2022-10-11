@@ -3,6 +3,7 @@
 
 <head>
 
+    <link rel="icon" href="<?php echo base_url() ?>/assets/img/logo.png" type="image/gif">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,7 +14,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="<?php echo base_url() ?>/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="<?php echo base_url() ?>/assets/css/nunito-font.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url() ?>/assets/css/sb-admin-2.min.css" rel="stylesheet">
@@ -45,44 +46,45 @@
                     <br>
                     <br>
                     <center>
-                        <a href="<?php echo base_url('welcome') ?>" style="float:left" class="previous btn button3 btn-primary"><i class="fas fa-arrow-left"></i></a>
+                        <a href="<?php echo base_url('admin') ?>" style="float:left" class="previous btn button3 btn-primary"><i class="fas fa-arrow-left"></i></a>
                         <a href="#" style="float:right" class="previous btn button3 btn-primary"><i class="fas fa-arrow-right"></i></a>
-                        <a class="text-center font-weight-bold button5" style="text-decoration: none; border-radius:20px; font-size: 40px; color:white;">COUNTER BOTTLE TREATMENT</a>
+                        <a class="text-center font-weight-bold button5" style="text-decoration: none; border-radius:20px; font-size: 40px; color:white;">EDIT COUNTER BOTTLE TREATMENT</a>
                     </center>
                     <center>
                         <div class="card">
                             <div class="card-body" style=" background-color: #8791a5;">
 
                                 <div class="card-body" style="color: white;">
-                                    <?php echo form_open_multipart('welcome/addDataAction') ?>
-                                    <form method="post" action="<?php echo base_url('welcome/addDataAction') ?>" enctype="multipart/form-data">
+                                    <?php foreach ($data_botol as $row) : ?>
+                                        <?php echo form_open_multipart('admin/editbotolaksi') ?>
+
                                         <div class="form-row">
                                             <div class="col-md-4 mb-3">
-                                                <label class="h3 font-weight-bold">Tanggal</label>
-                                                <input id="date-inp" type="date" name="createdAt" class=" form-control form-control-lg">
-                                                <?php echo form_error('createdAt', '<div class="text small text-danger"></div>') ?>
+                                                <input type="hidden" name="id" class="form-control" value="<?php echo $row->id ?>">
+                                                <input type="date" name="date_created" class="form-control form-control-lg" value="<?php echo $row->date_created ?>">
+                                                <?php echo form_error('date_created', '<small class="font-weight-bold">', '</small>') ?>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label class="h3 font-weight-bold">Nama</label>
+
                                                 <select name="name" class="form-control form-control-lg">
-                                                    <option value=""><b>Pilih Nama...</b></option>
-                                                    <?php foreach ($data_nama as $row) : ?>
-                                                        <option value=" <?php echo $row->name ?>">
-                                                            <?php echo $row->name ?>
+                                                    <option value="<?php echo $row->name ?>"><b><?php echo $row->name ?></b></option>
+                                                    <?php foreach ($data_supervisor as $sv) : ?>
+                                                        <option value=" <?php echo $sv->name ?>">
+                                                            <?php echo $sv->name ?>
                                                         </option>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <?php echo form_error('name', '<div class="text small text-danger"></div>') ?>
+                                                <?php echo form_error('name', '<small class="font-weight-bold">', '</small>') ?>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label class="h3 font-weight-bold">Shift</label>
+
                                                 <select name="shift" class="form-control form-control-lg">
-                                                    <option value="">Pilih Shift...</option>
+                                                    <option value="<?php echo $row->shift ?>"><?php echo $row->shift ?></option>
                                                     <option value="Shift 1">Shift 1</option>
                                                     <option value="Shift 2">Shift 2</option>
                                                     <option value="Shift 3">Shift 3</option>
                                                 </select>
-                                                <?php echo form_error('shift', '<div class="text small text-danger"></div>') ?>
+                                                <?php echo form_error('shift', '<small class="font-weight-bold">', '</small>') ?>
                                             </div>
                                         </div>
                                         <br>
@@ -90,63 +92,53 @@
                                             <div class="form-group">
                                                 <div class="wrapper1">
                                                     <div class="container1">
-                                                        <h2 class="k1">Botol Kotor Dari Checker</h2>
-                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('welcome/addData') ?>" data-toggle="modal" data-target="#satuModal"><i class="fas fa-pen-square"></i> Custom</a>
+                                                        <h2 class="k1">Botol Kosong Dari ATM</h2>
+                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('admin/inputbotol') ?>" data-toggle="modal" data-target="#satuModal"><i class="fas fa-pen-square"></i> Custom</a>
                                                         <input type="hidden" id="angka1" value="1">
                                                         <input type="hidden" id="angka2" value="1">
-                                                        <input type="number" name="botolkotordarichecker" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="0" id="hasil" readonly>
+                                                        <input type="number" name="botolkotordarichecker" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="<?php echo $row->botolkotordarichecker ?>" id="hasil" readonly>
                                                         <a class="btn button1 btn-primary" id="increment" onclick="ftambah()"><i class="fas fa-plus fa-lg"></i></a>
                                                         <a class="btn button1 btn-danger" id="decrement" onclick="fkurang()"><i class="fas fa-minus fa-lg"></i></a>
-                                                        <?php echo form_error('botolkotordarichecker', '<div class="text small text-danger"></div>') ?>
                                                     </div>
                                                     <div class="container2">
                                                         <h2 class="k2">Botol Kosong Dari Visual Kosong</h2>
                                                         <input type="hidden" id="dua1" value="1">
                                                         <input type="hidden" id="dua2" value="1">
-                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('welcome/addData') ?>" data-toggle="modal" data-target="#duaModal"><i class="fas fa-pen-square"></i> Custom</a>
-                                                        <input type="number" name="botolkosongdarivisualkosong" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="0" id="hasil2" readonly>
+                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('admin/inputbotol') ?>" data-toggle="modal" data-target="#duaModal"><i class="fas fa-pen-square"></i> Custom</a>
+                                                        <input type="number" name="botolkosongdarivisualkosong" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="<?php echo $row->botolkosongdarivisualkosong ?>" id="hasil2" readonly>
                                                         <a class="btn button1 btn-primary" id="increment2" onclick="f2tambah()"><i class="fas fa-plus fa-lg"></i></a>
                                                         <a class="btn button1 btn-danger" id="decrement2" onclick="f2kurang()"><i class="fas fa-minus fa-lg"></i></a>
-                                                        <?php echo form_error('botolkosongdarivisualkosong', '<div class="text small text-danger"></div>') ?>
                                                     </div>
                                                     <div class="container3">
-                                                        <h2 class="k3">Botol Yang Masuk Treatment</h2>
+                                                        <h2 class="k3">Botol Yang Bisa di Treatment Dari ATM</h2>
                                                         <input type="hidden" id="tiga1" value="1">
                                                         <input type="hidden" id="tiga2" value="1">
-                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('welcome/addData') ?>" data-toggle="modal" data-target="#tigaModal"><i class="fas fa-pen-square"></i> Custom</a>
-                                                        <input type="number" name="botolyangmasuktreatment" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="0" id="hasil3" readonly>
+                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('admin/inputbotol') ?>" data-toggle="modal" data-target="#tigaModal"><i class="fas fa-pen-square"></i> Custom</a>
+                                                        <input type="number" name="botolyangmasuktreatment" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="<?php echo $row->botolyangmasuktreatment ?>" id="hasil3" readonly>
                                                         <a class="btn button1 btn-primary" id="increment3" onclick="f3tambah()"><i class="fas fa-plus fa-lg"></i></a>
                                                         <a class="btn button1 btn-danger" id="decrement3" onclick="f3kurang()"><i class="fas fa-minus fa-lg"></i></a>
-                                                        <?php echo form_error('botolyangmasuktreatment', '<div class="text small text-danger"></div>') ?>
                                                     </div>
                                                     <div class="container4">
-                                                        <h2 class="k4">Botol Yang Bisa di Treatment</h2>
+                                                        <h2 class="k4">Botol Yang Bisa di Treatment Dari Visual</h2>
                                                         <input type="hidden" id="empat1" value="1">
                                                         <input type="hidden" id="empat2" value="1">
-                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('welcome/addData') ?>" data-toggle="modal" data-target="#empatModal"><i class="fas fa-pen-square"></i> Custom</a>
-                                                        <input type="number" name="botolyangbisaditreatment" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="0" id="hasil4" readonly>
+                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('admin/inputbotol') ?>" data-toggle="modal" data-target="#empatModal"><i class="fas fa-pen-square"></i> Custom</a>
+                                                        <input type="number" name="botolyangbisaditreatment" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="<?php echo $row->botolyangbisaditreatment ?>" id="hasil4" readonly>
                                                         <a class="btn button1 btn-primary" id="increment4" onclick="f4tambah()"><i class="fas fa-plus fa-lg"></i></a>
                                                         <a class="btn button1 btn-danger" id="decrement4" onclick="f4kurang()"><i class="fas fa-minus fa-lg"></i></a>
-                                                        <?php echo form_error('botolyangbisaditreatment', '<div class="text small text-danger"></div>') ?>
                                                     </div>
-                                                    <div class="container5">
-                                                        <h2 class="k5">Botol Yang Tidak<br>Bisa di Treatment<br>(AFKIR)</h2>
-                                                        <input type="hidden" id="lima1" value="1">
-                                                        <input type="hidden" id="lima2" value="1">
-                                                        <a class="btn btn-sm btn-light mb-3 font-weight-bold" href="<?php echo base_url('welcome/addData') ?>" data-toggle="modal" data-target="#limaModal"><i class="fas fa-pen-square"></i> Custom</a>
-                                                        <input type="number" name="botolyangtidakbisaditreatment" style="font-family: monospace; border: 2px solid black; border-radius:4px;" min="0" max="100" step="1" value="0" id="hasil5" readonly>
-                                                        <a class="btn button1 btn-primary" id="increment5" onclick="f5tambah()"><i class="fas fa-plus fa-lg"></i></a>
-                                                        <a class="btn button1 btn-danger" id="decrement5" onclick="f5kurang()"><i class="fas fa-minus fa-lg"></i></a>
-                                                        <?php echo form_error('botolyangbisaditreatment', '<div class="text small text-danger"></div>') ?>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                             <br>
                                             <br>
                                             <br>
-                                            <button onclick="return confirm('Konfirmasi Untuk Menyimpan Data Botol')" type="submit" class="btn button4 font-weight-bold btn-lg" style="border-radius:15px; width: 150px; height: 60px;">SIMPAN</button>
-                                            <?php echo form_close(); ?>
+                                            <button onclick="return confirm('Konfirmasi Untuk Mengubah Data Botol')" type="submit" class="btn button4 font-weight-bold btn-lg" style="border-radius:15px; width: 150px; height: 60px;">SIMPAN</button>
                                         </div>
+                                        <?php echo form_close(); ?>
+                                    <?php endforeach; ?>
+
+                                    </form>
                                 </div>
                             </div>
                         </div>
