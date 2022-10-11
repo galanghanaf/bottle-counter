@@ -79,6 +79,7 @@ class User extends CI_Controller
             ['email' => $this->session->userdata('email')]
         )->row_array();
 
+        $data['title'] = "Profil Saya";
 
         $this->load->view('user/myprofile', $data);
     }
@@ -88,7 +89,6 @@ class User extends CI_Controller
             'user',
             ['email' => $this->session->userdata('email')]
         )->row_array();
-
 
         $this->form_validation->set_rules('name', 'Nama', 'required');
 

@@ -351,6 +351,7 @@ class Admin extends CI_Controller
             'user',
             ['email' => $this->session->userdata('email')]
         )->row_array();
+        $data['title'] = "Profil Saya";
 
 
         $this->load->view('admin/myprofile', $data);
